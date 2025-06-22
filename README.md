@@ -164,6 +164,31 @@ func (p protectedPage) Page() templ.Component {
 }
 ```
 
+Example middleware implementation:
+
+```go
+// Authentication middleware that checks for a valid session
+func requireAuth(next http.Handler) http.Handler {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        session := r.Context().Value("session")
+        if session == nil {
+            http.Redirect(w, r, "/login", http.StatusSeeOther)
+            return
+        }
+        next.ServeHTTP(w, r)
+    })
+}
+
+// Logging middleware that tracks page access
+func loggingMiddleware(next http.Handler) http.Handler {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        start := time.Now()
+        next.ServeHTTP(w, r)
+        log.Printf("%s %s took %v", r.Method, r.URL.Path, time.Since(start))
+    })
+}
+```
+
 ### Middleware Execution Order
 
 Middlewares are executed in the order they are defined:
@@ -177,39 +202,9 @@ The middleware execution forms a chain where each middleware wraps the next, cre
 
 Structpages has built-in support for HTMX partial rendering:
 
-### Basic HTMX Support
-
-Define a component method for HTMX requests:
-
-```go
-type todoItem struct{}
-
-func (t todoItem) Page() templ.Component {
-    // Full page render
-    return todoPageTemplate()
-}
-
-func (t todoItem) TodoRow() templ.Component {
-    // Partial render for HTMX
-    return todoRowTemplate()
-}
-
-// Configure which component to render
-func (t todoItem) PageConfig(r *http.Request) structpages.PageConfig {
-    if r.Header.Get("HX-Request") == "true" {
-        return structpages.PageConfig{
-            Component: t.TodoRow,
-        }
-    }
-    return structpages.PageConfig{
-        Component: t.Page,
-    }
-}
-```
-
 ### HTMX Helper Functions
 
-Use the built-in HTMX helper:
+Use the built-in HTMX helper for simple cases:
 
 ```go
 func (p myPage) PageConfig(r *http.Request) structpages.PageConfig {
@@ -218,6 +213,43 @@ func (p myPage) PageConfig(r *http.Request) structpages.PageConfig {
 ```
 
 This automatically returns `PartialContent` for HTMX requests and `Page` for regular requests.
+
+### Custom HTMX Target Handling
+
+For more complex scenarios, implement custom PageConfig that switches based on HX-Target:
+
+```go
+type todoPage struct{}
+
+func (t todoPage) Page() templ.Component {
+    // Full page render
+    return todoPageTemplate()
+}
+
+func (t todoPage) TodoList() templ.Component {
+    // Render just the todo list
+    return todoListTemplate()
+}
+
+func (t todoPage) TodoItem() templ.Component {
+    // Render a single todo item
+    return todoItemTemplate()
+}
+
+// Return the component name as a string based on HX-Target
+func (t todoPage) PageConfig(r *http.Request) (string, error) {
+    hxTarget := r.Header.Get("HX-Target")
+    
+    switch hxTarget {
+    case "todo-list":
+        return "TodoList", nil
+    case "todo-item":
+        return "TodoItem", nil
+    default:
+        return "Page", nil
+    }
+}
+```
 
 ## UrlFor Functionality
 
@@ -229,9 +261,9 @@ First, create a wrapper function for use in templ files:
 
 ```go
 // urlFor wraps structpages.UrlFor for templ templates
-func urlFor(ctx context.Context, page any, args ...any) (templ.SafeURL, error) {
+func urlFor(ctx context.Context, page any, args ...any) (templ.URL, error) {
     url, err := structpages.UrlFor(ctx, page, args...)
-    return templ.SafeURL(url), err
+    return templ.URL(url), err
 }
 ```
 
@@ -242,10 +274,6 @@ func urlFor(ctx context.Context, page any, args ...any) (templ.SafeURL, error) {
 <a href={ urlFor(ctx, index{}) }>Home</a>
 <a href={ urlFor(ctx, product{}) }>Products</a>
 <a href={ urlFor(ctx, team{}) }>Our Team</a>
-
-// In Go code
-url, err := structpages.UrlFor(ctx, userProfile{}, "123")
-// Returns: /users/123
 ```
 
 ### With Path Parameters
@@ -256,6 +284,10 @@ type pages struct {
     userProfile `route:"/users/{id} User Profile"`
     blogPost    `route:"/blog/{year}/{month}/{slug} Blog Post"`
 }
+
+// In Go code (e.g., in handlers or middleware)
+url, err := structpages.UrlFor(ctx, userProfile{}, "123")
+// Returns: /users/123
 ```
 
 ```templ
@@ -339,28 +371,46 @@ templ layout() {
 
 ### Props Pattern
 
-Pass data to your components using Props:
+Pass data to your components using typed Props:
 
 ```go
-type productPage struct {
-    ProductID string
+type productPage struct{}
+
+// Define typed props for better type safety
+type productPageProps struct {
+    Product Product
+    RelatedProducts []Product
+    IsInStock bool
 }
 
-func (p productPage) Props(r *http.Request) (map[string]any, error) {
+// Props method returns typed props and can receive injected dependencies
+func (p productPage) Props(r *http.Request, store *Store) (productPageProps, error) {
     productID := r.PathValue("id")
-    product, err := loadProduct(productID)
+    product, err := store.LoadProduct(productID)
     if err != nil {
-        return nil, err
+        return productPageProps{}, err
     }
-    return map[string]any{
-        "product": product,
+    
+    related, _ := store.LoadRelatedProducts(productID)
+    
+    return productPageProps{
+        Product: product,
+        RelatedProducts: related,
+        IsInStock: product.Stock > 0,
     }, nil
 }
 
-templ (p productPage) Page(props map[string]any) {
+// Page method receives typed props
+templ (p productPage) Page(props productPageProps) {
     @layout() {
-        <h1>{ props["product"].(Product).Name }</h1>
-        <p>{ props["product"].(Product).Description }</p>
+        <h1>{ props.Product.Name }</h1>
+        <p>{ props.Product.Description }</p>
+        if props.IsInStock {
+            <button>Add to Cart</button>
+        } else {
+            <span>Out of Stock</span>
+        }
+        @relatedProductsList(props.RelatedProducts)
     }
 }
 ```
@@ -396,16 +446,25 @@ templ recentActivity() {
 }
 ```
 
-### Error Handling Pattern
+## Advanced Features
+
+### Custom Handlers
+
+Structpages supports two types of custom handlers:
+
+#### ServeHTTP with Error Return (Buffered)
+
+When `ServeHTTP` returns an error, structpages uses a buffered writer to capture the response. This allows proper error page rendering if an error occurs:
 
 ```go
 type formPage struct{}
 
+// This handler uses a buffered writer
 func (f formPage) ServeHTTP(w http.ResponseWriter, r *http.Request) error {
     if r.Method == "POST" {
         // Process form
         if err := processForm(r); err != nil {
-            // Error will be handled by error page
+            // Response is buffered, so error page can be rendered
             return err
         }
         http.Redirect(w, r, "/success", http.StatusSeeOther)
@@ -417,15 +476,14 @@ func (f formPage) ServeHTTP(w http.ResponseWriter, r *http.Request) error {
 }
 ```
 
-## Advanced Features
+#### Standard http.Handler (Direct Write)
 
-### Custom Handlers
-
-Implement `ServeHTTP` for complete control:
+Implementing the standard `http.Handler` interface writes directly to the response without buffering:
 
 ```go
 type apiEndpoint struct{}
 
+// This handler writes directly to the response
 func (a apiEndpoint) ServeHTTP(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Content-Type", "application/json")
     json.NewEncoder(w).Encode(map[string]string{
@@ -451,14 +509,68 @@ func (d *databasePage) Init() {
 
 ### Dependency Injection
 
-Register and use dependencies:
+Structpages supports dependency injection by passing services when mounting pages. These services are then available in page methods:
 
 ```go
-// Register a type
-structpages.RegisterArg(&UserService{})
+// Define your services
+type Store struct {
+    db *sql.DB
+}
 
-// Use in your page
-func (p myPage) Page(r *http.Request, svc *UserService) templ.Component {
-    users := svc.GetUsers()
-    return renderUsers(users)
+type SessionManager struct {
+    // session configuration
+}
+
+// Pass services when mounting pages
+sp := structpages.New()
+r := structpages.NewRouter(http.NewServeMux())
+
+store := &Store{db: db}
+sessionManager := NewSessionManager()
+
+// Services are passed as additional arguments to MountPages
+sp.MountPages(r, pages{}, "/", "My App", 
+    store,           // Will be available in page methods
+    sessionManager,  // Will be available in page methods
+    logger,          // Any other dependencies
+)
+```
+
+#### Using Injected Services
+
+Services are automatically injected into page methods that declare them as parameters:
+
+```go
+type userListPage struct{}
+
+// Props method receives injected Store
+func (p userListPage) Props(r *http.Request, store *Store) (UserListProps, error) {
+    users, err := store.GetUsers()
+    if err != nil {
+        return UserListProps{}, err
+    }
+    return UserListProps{Users: users}, nil
+}
+
+// ServeHTTP can also receive injected services
+func (p signOutPage) ServeHTTP(w http.ResponseWriter, r *http.Request, sm *SessionManager) error {
+    // Clear user session
+    sm.Destroy(r.Context())
+    http.Redirect(w, r, "/", http.StatusSeeOther)
+    return nil
+}
+
+// Middleware methods can receive services too
+func (p protectedPages) Middlewares(sm *SessionManager) []structpages.MiddlewareFunc {
+    return []structpages.MiddlewareFunc{
+        func(next http.Handler, pn *structpages.PageNode) http.Handler {
+            return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+                if !sm.Exists(r.Context(), "user") {
+                    http.Redirect(w, r, "/login", http.StatusSeeOther)
+                    return
+                }
+                next.ServeHTTP(w, r)
+            })
+        },
+    }
 }
