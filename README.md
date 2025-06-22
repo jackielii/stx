@@ -261,7 +261,7 @@ First, create a wrapper function for use in templ files:
 
 ```go
 // urlFor wraps structpages.UrlFor for templ templates
-func urlFor(ctx context.Context, page any, args ...any) (templ.URL, error) {
+func urlFor(ctx context.Context, page any, args ...any) (templ.SafeURL, error) {
     url, err := structpages.UrlFor(ctx, page, args...)
     return templ.URL(url), err
 }
