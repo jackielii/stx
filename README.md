@@ -171,6 +171,8 @@ Middlewares are executed in the order they are defined:
 2. Page-specific middlewares (first to last)
 3. Page handler
 
+The middleware execution forms a chain where each middleware wraps the next, creating an "onion" pattern. The `TestMiddlewareOrder` test in the codebase validates this behavior.
+
 ## HTMX Integration
 
 Structpages has built-in support for HTMX partial rendering:
@@ -221,45 +223,88 @@ This automatically returns `PartialContent` for HTMX requests and `Page` for reg
 
 Generate type-safe URLs for your pages:
 
-### Basic Usage
+### Setup for Templ Templates
+
+First, create a wrapper function for use in templ files:
 
 ```go
-// In your template or handler
-url := structpages.UrlFor(ctx, pages{}.userProfile{}, "123")
+// urlFor wraps structpages.UrlFor for templ templates
+func urlFor(ctx context.Context, page any, args ...any) (templ.SafeURL, error) {
+    url, err := structpages.UrlFor(ctx, page, args...)
+    return templ.SafeURL(url), err
+}
+```
+
+### Basic Usage
+
+```templ
+// Simple page references without parameters
+<a href={ urlFor(ctx, index{}) }>Home</a>
+<a href={ urlFor(ctx, product{}) }>Products</a>
+<a href={ urlFor(ctx, team{}) }>Our Team</a>
+
+// In Go code
+url, err := structpages.UrlFor(ctx, userProfile{}, "123")
 // Returns: /users/123
 ```
 
-### With Multiple Parameters
+### With Path Parameters
 
 ```go
-// Positional arguments
-url := structpages.UrlFor(ctx, pages{}.blogPost{}, "2024", "06", "my-post")
-// Returns: /blog/2024/06/my-post
+// Route definition
+type pages struct {
+    userProfile `route:"/users/{id} User Profile"`
+    blogPost    `route:"/blog/{year}/{month}/{slug} Blog Post"`
+}
+```
 
-// Named parameters
-url := structpages.UrlFor(ctx, pages{}.blogPost{}, 
-    "year", "2024",
-    "month", "06", 
-    "slug", "my-post",
-)
+```templ
+// Single parameter - positional
+<a href={ urlFor(ctx, userProfile{}, "123") }>View User</a>
+
+// Multiple parameters - as key-value pairs
+<a href={ urlFor(ctx, blogPost{}, "year", "2024", "month", "06", "slug", "my-post") }>
+    Read Post
+</a>
 
 // Using a map
-url := structpages.UrlFor(ctx, pages{}.blogPost{}, map[string]any{
+<a href={ urlFor(ctx, blogPost{}, map[string]any{
     "year": "2024",
     "month": "06",
     "slug": "my-post",
-})
+}) }>Read Post</a>
 ```
 
-### Finding Pages by Type
+### With Query Parameters
+
+Use the `join` helper to add query parameters:
 
 ```go
-// Find a page by its type
-pc := structpages.FromContext(ctx)
-url := pc.UrlFor(func(pn structpages.PageNode) bool {
-    _, ok := pn.Page.(userProfile)
-    return ok
-}, "123")
+// Helper function
+func join(page any, pattern string) string {
+    // Implementation that combines page with query pattern
+}
+```
+
+```templ
+// Add query parameters with template placeholders
+<a href={ urlFor(ctx, join(product{}, "?page={page}"), "page", "2") }>
+    Page 2
+</a>
+
+// Multiple query parameters
+<form hx-post={ urlFor(ctx, join(toggle{}, "?redirect={url}"), 
+    "id", todoId, 
+    "url", currentURL) }>
+    <button>Toggle</button>
+</form>
+
+// Complex example with path and query parameters
+<a href={ urlFor(ctx, join(jobDetail{}, "?tab={tab}"), 
+    "id", jobId, 
+    "tab", "overview") }>
+    Job Overview
+</a>
 ```
 
 ## Templ Patterns
