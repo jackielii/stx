@@ -1,0 +1,610 @@
+Initializing media library page
+
+Available routes:
+/
+/posts/{slug}
+/category/{slug}
+/search
+/login
+/logout
+/admin
+/admin/posts
+/admin/posts/new
+/admin/posts/{id}/edit
+/admin/users
+/admin/settings
+/api/posts/{id}/publish
+/static/
+2025/06/22 21:38:02 Starting blog server on http://localhost:8080
+2025/06/22 21:38:02 Database initialized successfully
+2025/06/22 21:39:07 Error handling request /: error calling props component homePage.Page: sql: expected 11 destination arguments in Scan, not 1
+2025/06/22 21:39:07 GET / 946µs
+# github.com/jackielii/structpages/examples/blog-admin
+./store.go:164:2: undefined: log
+./store.go:165:2: undefined: log
+# github.com/jackielii/structpages/examples/blog-admin
+./store.go:164:2: undefined: log
+./store.go:165:2: undefined: log
+./store.go:175:2: undefined: log
+./store.go:176:2: undefined: log
+Initializing media library page
+
+Available routes:
+/
+/posts/{slug}
+/category/{slug}
+/search
+/login
+/logout
+/admin
+/admin/posts
+/admin/posts/new
+/admin/posts/{id}/edit
+/admin/users
+/admin/settings
+/api/posts/{id}/publish
+/static/
+2025/06/22 21:39:35 Starting blog server on http://localhost:8080
+2025/06/22 21:39:35 Database initialized successfully
+2025/06/22 21:39:46 Count Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ?
+2025/06/22 21:39:46 Args: [published]
+2025/06/22 21:39:46 Error handling request /: error calling props component homePage.Page: sql: expected 11 destination arguments in Scan, not 1
+2025/06/22 21:39:46 GET / 852.75µs
+Initializing media library page
+
+Available routes:
+/
+/posts/{slug}
+/category/{slug}
+/search
+/login
+/logout
+/admin
+/admin/posts
+/admin/posts/new
+/admin/posts/{id}/edit
+/admin/users
+/admin/settings
+/api/posts/{id}/publish
+/static/
+2025/06/22 21:40:01 Starting blog server on http://localhost:8080
+2025/06/22 21:40:01 Database initialized successfully
+2025/06/22 21:40:05 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ?
+2025/06/22 21:40:05 Args: [published]
+2025/06/22 21:40:05 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:40:05 Main Args: [published 5 0]
+2025/06/22 21:40:05 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ?
+2025/06/22 21:40:05 Args: [published]
+2025/06/22 21:40:05 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:40:05 Main Args: [published 5 0]
+2025/06/22 21:40:05 GET / 1.387042ms
+2025/06/22 21:40:11 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ?
+2025/06/22 21:40:11 Args: [published]
+2025/06/22 21:40:11 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:40:11 Main Args: [published 5 0]
+2025/06/22 21:40:11 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ?
+2025/06/22 21:40:11 Args: [published]
+2025/06/22 21:40:11 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:40:11 Main Args: [published 5 0]
+2025/06/22 21:40:11 GET / 985.083µs
+2025/06/22 21:40:22 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?)
+2025/06/22 21:40:22 Args: [published 2]
+2025/06/22 21:40:22 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?) ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:40:22 Main Args: [published 2 3 0]
+2025/06/22 21:40:22 GET /posts/welcome-to-structpages 3.027292ms
+2025/06/22 21:40:29 GET /login 147.875µs
+2025/06/22 21:40:37 POST /login 68.927416ms
+2025/06/22 21:40:39 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ?
+2025/06/22 21:40:39 Args: [published]
+2025/06/22 21:40:39 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:40:39 Main Args: [published 5 0]
+2025/06/22 21:40:39 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ?
+2025/06/22 21:40:39 Args: [published]
+2025/06/22 21:40:39 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:40:39 Main Args: [published 5 0]
+2025/06/22 21:40:39 GET / 1.446792ms
+2025/06/22 21:40:39 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?)
+2025/06/22 21:40:39 Args: [published 2]
+2025/06/22 21:40:39 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?) ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:40:39 Main Args: [published 2 3 0]
+2025/06/22 21:40:45 GET /posts/welcome-to-structpages 5.199986667s
+2025/06/22 21:40:45 POST /login 733.397417ms
+2025/06/22 21:40:51 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ?
+2025/06/22 21:40:51 Args: [published]
+2025/06/22 21:40:51 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:40:51 Main Args: [published 5 0]
+2025/06/22 21:40:51 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ?
+2025/06/22 21:40:51 Args: [published]
+2025/06/22 21:40:51 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:40:51 Main Args: [published 5 0]
+2025/06/22 21:40:51 GET / 2.207584ms
+2025/06/22 21:40:52 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?)
+2025/06/22 21:40:52 Args: [published 1]
+2025/06/22 21:40:52 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?) ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:40:52 Main Args: [published 1 10 0]
+2025/06/22 21:40:52 GET /category/technology 819.208µs
+2025/06/22 21:40:52 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?)
+2025/06/22 21:40:52 Args: [published 2]
+2025/06/22 21:40:52 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?) ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:40:52 Main Args: [published 2 10 0]
+2025/06/22 21:40:52 GET /category/design 488.875µs
+2025/06/22 21:40:53 GET /search 79.209µs
+2025/06/22 21:40:53 GET /login 79.542µs
+2025/06/22 21:40:55 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ?
+2025/06/22 21:40:55 Args: [published]
+2025/06/22 21:40:55 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:40:55 Main Args: [published 5 0]
+2025/06/22 21:40:55 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ?
+2025/06/22 21:40:55 Args: [published]
+2025/06/22 21:40:55 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:40:55 Main Args: [published 5 0]
+2025/06/22 21:40:55 GET / 668.5µs
+2025/06/22 21:40:56 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?)
+2025/06/22 21:40:56 Args: [published 1]
+2025/06/22 21:40:56 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?) ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:40:56 Main Args: [published 1 10 0]
+2025/06/22 21:40:56 GET /category/technology 539.875µs
+2025/06/22 21:40:57 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?)
+2025/06/22 21:40:57 Args: [published 2]
+2025/06/22 21:40:57 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?) ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:40:57 Main Args: [published 2 10 0]
+2025/06/22 21:40:57 GET /category/design 451.25µs
+2025/06/22 21:40:58 GET /search 50.458µs
+2025/06/22 21:40:59 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ?
+2025/06/22 21:40:59 Args: [published]
+2025/06/22 21:40:59 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:40:59 Main Args: [published 5 0]
+2025/06/22 21:40:59 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ?
+2025/06/22 21:40:59 Args: [published]
+2025/06/22 21:40:59 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:40:59 Main Args: [published 5 0]
+2025/06/22 21:40:59 GET / 1.006542ms
+2025/06/22 21:41:00 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?)
+2025/06/22 21:41:00 Args: [published 2]
+2025/06/22 21:41:00 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?) ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:41:00 Main Args: [published 2 3 0]
+2025/06/22 21:41:00 GET /posts/welcome-to-structpages 2.685959ms
+2025/06/22 21:41:02 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?)
+2025/06/22 21:41:02 Args: [published 1]
+2025/06/22 21:41:02 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?) ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:41:02 Main Args: [published 1 3 0]
+2025/06/22 21:41:07 GET /posts/building-with-go 5.184891666s
+2025/06/22 21:41:07 POST /login 270.85125ms
+# github.com/jackielii/structpages/examples/blog-admin
+./auth.go:6:2: "log" imported and not used
+Initializing media library page
+
+Available routes:
+/
+/posts/{slug}
+/category/{slug}
+/search
+/login
+/logout
+/admin
+/admin/posts
+/admin/posts/new
+/admin/posts/{id}/edit
+/admin/users
+/admin/settings
+/api/posts/{id}/publish
+/static/
+2025/06/22 21:41:47 Starting blog server on http://localhost:8080
+2025/06/22 21:41:47 Database initialized successfully
+2025/06/22 21:41:54 Login attempt for user: admin
+2025/06/22 21:41:54 Stored hash: $2a$10$kMWQwsr4cMRkfY9tY.f0fuJbB2zDRs8Qm0D3xZB0yQwJEuOVhMKOW
+2025/06/22 21:41:54 Password verification failed: crypto/bcrypt: hashedPassword is not the hash of the given password
+2025/06/22 21:41:54 POST /login 68.617541ms
+2025/06/22 21:42:01 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?)
+2025/06/22 21:42:01 Args: [published 2]
+2025/06/22 21:42:01 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?) ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:42:01 Main Args: [published 2 3 0]
+2025/06/22 21:42:01 GET /posts/welcome-to-structpages 11.489959ms
+2025/06/22 21:42:04 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ?
+2025/06/22 21:42:04 Args: [published]
+2025/06/22 21:42:04 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:42:04 Main Args: [published 5 0]
+2025/06/22 21:42:04 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ?
+2025/06/22 21:42:04 Args: [published]
+2025/06/22 21:42:04 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:42:04 Main Args: [published 5 0]
+2025/06/22 21:42:04 GET / 2.910917ms
+2025/06/22 21:42:05 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?)
+2025/06/22 21:42:05 Args: [published 1]
+2025/06/22 21:42:05 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?) ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:42:05 Main Args: [published 1 10 0]
+2025/06/22 21:42:05 GET /category/technology 1.578959ms
+2025/06/22 21:42:06 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ?
+2025/06/22 21:42:06 Args: [published]
+2025/06/22 21:42:06 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:42:06 Main Args: [published 5 0]
+2025/06/22 21:42:06 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ?
+2025/06/22 21:42:06 Args: [published]
+2025/06/22 21:42:06 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:42:06 Main Args: [published 5 0]
+2025/06/22 21:42:06 GET / 1.224791ms
+2025/06/22 21:42:06 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?)
+2025/06/22 21:42:06 Args: [published 1]
+2025/06/22 21:42:06 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?) ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:42:06 Main Args: [published 1 10 0]
+2025/06/22 21:42:06 GET /category/technology 470.834µs
+# github.com/jackielii/structpages/examples/blog-admin
+./main.go:28:6: main redeclared in this block
+	./hashtest.go:6:6: other declaration of main
+Initializing media library page
+
+Available routes:
+/
+/posts/{slug}
+/category/{slug}
+/search
+/login
+/logout
+/admin
+/admin/posts
+/admin/posts/new
+/admin/posts/{id}/edit
+/admin/users
+/admin/settings
+/api/posts/{id}/publish
+/static/
+2025/06/22 21:42:29 Starting blog server on http://localhost:8080
+2025/06/22 21:42:29 Database initialized successfully
+2025/06/22 21:42:43 Login attempt for user: admin
+2025/06/22 21:42:43 Stored hash: $2a$10$i/CMm4KCafFhALzoVAqRxO8MpyllRakjq5gwOFH4KMdeIWodOjKyS
+2025/06/22 21:42:43 POST /login 71.878916ms
+2025/06/22 21:42:43 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1
+2025/06/22 21:42:43 Args: []
+2025/06/22 21:42:43 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:42:43 Main Args: [1 0]
+2025/06/22 21:42:43 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1
+2025/06/22 21:42:43 Args: []
+2025/06/22 21:42:43 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:42:43 Main Args: [5 0]
+2025/06/22 21:42:43 POST /admin/ 857.125µs
+2025/06/22 21:42:44 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?)
+2025/06/22 21:42:44 Args: [published 2]
+2025/06/22 21:42:44 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? AND id IN (SELECT post_id FROM post_categories WHERE category_id = ?) ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:42:44 Main Args: [published 2 10 0]
+2025/06/22 21:42:44 GET /category/design 2.12275ms
+2025/06/22 21:42:52 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1
+2025/06/22 21:42:52 Args: []
+2025/06/22 21:42:52 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:42:52 Main Args: [1 0]
+2025/06/22 21:42:52 Count Query: SELECT COUNT(*) FROM posts WHERE 1=1
+2025/06/22 21:42:52 Args: []
+2025/06/22 21:42:52 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:42:52 Main Args: [5 0]
+2025/06/22 21:42:52 GET /admin/ 842.292µs
+Initializing media library page
+
+Available routes:
+/
+/posts/{slug}
+/category/{slug}
+/search
+/login
+/logout
+/admin
+/admin/posts
+/admin/posts/new
+/admin/posts/{id}/edit
+/admin/users
+/admin/settings
+/api/posts/{id}/publish
+/static/
+2025/06/22 21:43:01 Starting blog server on http://localhost:8080
+2025/06/22 21:43:01 Database initialized successfully
+2025/06/22 21:43:02 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:43:02 Main Args: [published 5 0]
+2025/06/22 21:43:02 Main Query: SELECT id, slug, title, content, excerpt, author_id, status, 
+	          published_at, created_at, updated_at, view_count FROM posts WHERE 1=1 AND status = ? ORDER BY created_at DESC LIMIT ? OFFSET ?
+2025/06/22 21:43:02 Main Args: [published 5 0]
+2025/06/22 21:43:02 GET / 840.959µs
+# github.com/jackielii/structpages/examples/blog-admin
+./store.go:5:2: "log" imported and not used
+Initializing media library page
+
+Available routes:
+/
+/posts/{slug}
+/category/{slug}
+/search
+/login
+/logout
+/admin
+/admin/posts
+/admin/posts/new
+/admin/posts/{id}/edit
+/admin/users
+/admin/settings
+/api/posts/{id}/publish
+/static/
+2025/06/22 21:43:12 Starting blog server on http://localhost:8080
+2025/06/22 21:43:12 Database initialized successfully
+# github.com/jackielii/structpages/examples/blog-admin
+./auth.go:6:2: "log" imported and not used
+Initializing media library page
+
+Available routes:
+/
+/posts/{slug}
+/category/{slug}
+/search
+/login
+/logout
+/admin
+/admin/posts
+/admin/posts/new
+/admin/posts/{id}/edit
+/admin/users
+/admin/settings
+/api/posts/{id}/publish
+/static/
+2025/06/22 21:43:27 Starting blog server on http://localhost:8080
+2025/06/22 21:43:27 Database initialized successfully
+Initializing media library page
+
+Available routes:
+/
+/posts/{slug}
+/category/{slug}
+/search
+/login
+/logout
+/admin
+/admin/posts
+/admin/posts/new
+/admin/posts/{id}/edit
+/admin/users
+/admin/settings
+/api/posts/{id}/publish
+/static/
+2025/06/22 21:43:32 Starting blog server on http://localhost:8080
+2025/06/22 21:43:40 GET /admin/posts/ 10.75µs
+2025/06/22 21:43:47 GET /admin/posts/ 23.875µs
+2025/06/22 21:44:13 GET /admin/posts/ 7.833µs
+2025/06/22 21:44:13 GET /login 223.083µs
+2025/06/22 21:44:19 GET /search 1.046375ms
+2025/06/22 21:44:27 GET /category/technology 557.5µs
+2025/06/22 21:44:36 GET /login 328.458µs
+2025/06/22 21:44:54 POST /login 83.584041ms
+2025/06/22 21:44:54 GET /admin/ 464.708µs
+2025/06/22 21:44:59 GET /admin/posts/ 2.151542ms
+2025/06/22 21:45:00 GET /admin/users/ 966.542µs
+2025/06/22 21:45:00 Error handling request /admin/media: error calling component mediaLibrary.Page: error calling component method main.mediaLibraryPage.Page: method main.mediaLibraryPage.Page requires argument of type *main.User, but not found
+2025/06/22 21:45:00 GET /admin/media 411.084µs
+2025/06/22 21:45:01 GET /admin/users/ 795.041µs
+2025/06/22 21:45:02 Error handling request /admin/media: error calling component mediaLibrary.Page: error calling component method main.mediaLibraryPage.Page: method main.mediaLibraryPage.Page requires argument of type *main.User, but not found
+2025/06/22 21:45:02 GET /admin/media 674µs
+2025/06/22 21:45:02 GET /admin/settings 415.584µs
+2025/06/22 21:45:03 Error handling request /admin/media: error calling component mediaLibrary.Page: error calling component method main.mediaLibraryPage.Page: method main.mediaLibraryPage.Page requires argument of type *main.User, but not found
+2025/06/22 21:45:03 GET /admin/media 425.125µs
+2025/06/22 21:45:04 Error handling request /admin/media: error calling component mediaLibrary.Page: error calling component method main.mediaLibraryPage.Page: method main.mediaLibraryPage.Page requires argument of type *main.User, but not found
+2025/06/22 21:45:04 GET /admin/media 366µs
+2025/06/22 21:45:04 Error handling request /admin/media: error calling component mediaLibrary.Page: error calling component method main.mediaLibraryPage.Page: method main.mediaLibraryPage.Page requires argument of type *main.User, but not found
+2025/06/22 21:45:04 GET /admin/media 515.333µs
+2025/06/22 21:45:04 Error handling request /admin/media: error calling component mediaLibrary.Page: error calling component method main.mediaLibraryPage.Page: method main.mediaLibraryPage.Page requires argument of type *main.User, but not found
+2025/06/22 21:45:04 GET /admin/media 379.666µs
+2025/06/22 21:45:05 Error handling request /admin/media: error calling component mediaLibrary.Page: error calling component method main.mediaLibraryPage.Page: method main.mediaLibraryPage.Page requires argument of type *main.User, but not found
+2025/06/22 21:45:05 GET /admin/media 551µs
+2025/06/22 21:45:05 Error handling request /admin/media: error calling component mediaLibrary.Page: error calling component method main.mediaLibraryPage.Page: method main.mediaLibraryPage.Page requires argument of type *main.User, but not found
+2025/06/22 21:45:05 GET /admin/media 446.709µs
+2025/06/22 21:45:05 Error handling request /admin/media: error calling component mediaLibrary.Page: error calling component method main.mediaLibraryPage.Page: method main.mediaLibraryPage.Page requires argument of type *main.User, but not found
+2025/06/22 21:45:05 GET /admin/media 421.583µs
+2025/06/22 21:45:06 Error handling request /admin/media: error calling component mediaLibrary.Page: error calling component method main.mediaLibraryPage.Page: method main.mediaLibraryPage.Page requires argument of type *main.User, but not found
+2025/06/22 21:45:06 GET /admin/media 451.334µs
+2025/06/22 21:45:06 Error handling request /admin/media: error calling component mediaLibrary.Page: error calling component method main.mediaLibraryPage.Page: method main.mediaLibraryPage.Page requires argument of type *main.User, but not found
+2025/06/22 21:45:06 GET /admin/media 726.083µs
+2025/06/22 21:45:06 Error handling request /admin/media: error calling component mediaLibrary.Page: error calling component method main.mediaLibraryPage.Page: method main.mediaLibraryPage.Page requires argument of type *main.User, but not found
+2025/06/22 21:45:06 GET /admin/media 276.875µs
+2025/06/22 21:45:07 Error handling request /admin/media: error calling component mediaLibrary.Page: error calling component method main.mediaLibraryPage.Page: method main.mediaLibraryPage.Page requires argument of type *main.User, but not found
+2025/06/22 21:45:07 GET /admin/media 280.875µs
+2025/06/22 21:45:09 GET /admin/ 730.208µs
+2025/06/22 21:45:10 GET /admin/posts/ 583.041µs
+2025/06/22 21:45:17 Error handling request /posts/welcome-to-structpages: context canceled
+2025/06/22 21:45:17 GET /posts/welcome-to-structpages 5.191995125s
+2025/06/22 21:45:19 GET /posts/draft-post 1.015375ms
+2025/06/22 21:45:30 http: panic serving [::1]:49280: runtime error: invalid memory address or nil pointer dereference
+goroutine 76 [running]:
+net/http.(*conn).serve.func1()
+	/opt/homebrew/Cellar/go/1.24.3/libexec/src/net/http/server.go:1947 +0xb0
+panic({0x100625360?, 0x100979b20?})
+	/opt/homebrew/Cellar/go/1.24.3/libexec/src/runtime/panic.go:792 +0x124
+main.postPage.Page.func1.2.postCard.4({{0x1006a1058?, 0x140003dd110?}, {0x10069cc68?, 0x140001e1d88?}})
+	/Users/jackieli/personal/structpages/examples/blog-admin/pages_templ.go:271 +0x290
+main.postPage.Page.func1.2.postCard.GeneratedTemplate.6({0x1006a1058?, 0x140003dd110?}, {0x10069cc68?, 0x140001e1d88?})
+	/Users/jackieli/go/pkg/mod/github.com/a-h/templ@v0.3.898/runtime/runtime.go:19 +0x34
+github.com/a-h/templ.ComponentFunc.Render(...)
+	/Users/jackieli/go/pkg/mod/github.com/a-h/templ@v0.3.898/runtime.go:36
+main.postPage.Page.func1.2({{0x1006a1058?, 0x140003dd110?}, {0x10069cc68?, 0x140001e1d88?}})
+	/Users/jackieli/personal/structpages/examples/blog-admin/pages_templ.go:575 +0x1184
+main.postPage.Page.func1.GeneratedTemplate.3({0x1006a1058?, 0x140003dd110?}, {0x10069cc68?, 0x140001e1d88?})
+	/Users/jackieli/go/pkg/mod/github.com/a-h/templ@v0.3.898/runtime/runtime.go:19 +0x34
+github.com/a-h/templ.ComponentFunc.Render(0x10069cc68?, {0x1006a1058?, 0x140003dd110?}, {0x10069cc68?, 0x140001e1d88?})
+	/Users/jackieli/go/pkg/mod/github.com/a-h/templ@v0.3.898/runtime.go:36 +0x44
+main.postPage.Page.func1.layout.4({{0x1006a1058?, 0x140003dd110?}, {0x10069cc68?, 0x140001e1d88?}})
+	/Users/jackieli/personal/structpages/examples/blog-admin/components_templ.go:74 +0x3c4
+main.postPage.Page.func1.layout.GeneratedTemplate.5({0x1006a1058?, 0x140003dd110?}, {0x10069cc68?, 0x140001e1d88?})
+	/Users/jackieli/go/pkg/mod/github.com/a-h/templ@v0.3.898/runtime/runtime.go:19 +0x34
+github.com/a-h/templ.ComponentFunc.Render(...)
+	/Users/jackieli/go/pkg/mod/github.com/a-h/templ@v0.3.898/runtime.go:36
+main.postPage.Page.func1({{0x1006a1058?, 0x140000f3380?}, {0x10069cdc8?, 0x14000262630?}})
+	/Users/jackieli/personal/structpages/examples/blog-admin/pages_templ.go:591 +0x270
+main.postPage.Page.GeneratedTemplate.func2({0x1006a1058?, 0x140000f3380?}, {0x10069cdc8?, 0x14000262630?})
+	/Users/jackieli/go/pkg/mod/github.com/a-h/templ@v0.3.898/runtime/runtime.go:19 +0x34
+github.com/a-h/templ.ComponentFunc.Render(0x10097f460?, {0x1006a1058?, 0x140000f3380?}, {0x10069cdc8?, 0x14000262630?})
+	/Users/jackieli/go/pkg/mod/github.com/a-h/templ@v0.3.898/runtime.go:36 +0x44
+github.com/jackielii/structpages.(*StructPages).render(0x140001ef4d0, {0x1006a08f8, 0x140000f33b0}, 0x140000f0c80, {0x100d980b8, 0x140003de5f0})
+	/Users/jackieli/personal/structpages/struct_pages.go:189 +0xc4
+github.com/jackielii/structpages.(*StructPages).buildHandler.func1({0x1006a08f8, 0x140000f33b0}, 0x140000f0c80)
+	/Users/jackieli/personal/structpages/struct_pages.go:182 +0x250
+net/http.HandlerFunc.ServeHTTP(0x140000fd8a8?, {0x1006a08f8?, 0x140000f33b0?}, 0x100670360?)
+	/opt/homebrew/Cellar/go/1.24.3/libexec/src/net/http/server.go:2294 +0x38
+main.loggingMiddleware.func1({0x1006a08f8, 0x140000f33b0}, 0x140000f0c80)
+	/Users/jackieli/personal/structpages/examples/blog-admin/main.go:153 +0x68
+net/http.HandlerFunc.ServeHTTP(0x140001fa960?, {0x1006a08f8?, 0x140000f33b0?}, 0x1400002cecd?)
+	/opt/homebrew/Cellar/go/1.24.3/libexec/src/net/http/server.go:2294 +0x38
+github.com/alexedwards/scs/v2.(*SessionManager).LoadAndSave.func1({0x1006a0a18, 0x140000aed20}, 0x140000f0b40)
+	/Users/jackieli/go/pkg/mod/github.com/alexedwards/scs/v2@v2.8.0/session.go:156 +0x2b4
+net/http.HandlerFunc.ServeHTTP(0x140000f0a00?, {0x1006a0a18?, 0x140000aed20?}, 0x1006a1090?)
+	/opt/homebrew/Cellar/go/1.24.3/libexec/src/net/http/server.go:2294 +0x38
+github.com/jackielii/structpages.(*StructPages).MountPages.withPcCtx.func1.1({0x1006a0a18, 0x140000aed20}, 0x140000f0a00)
+	/Users/jackieli/personal/structpages/url_for.go:20 +0xa4
+net/http.HandlerFunc.ServeHTTP(0x140001ca180?, {0x1006a0a18?, 0x140000aed20?}, 0x10029dcd4?)
+	/opt/homebrew/Cellar/go/1.24.3/libexec/src/net/http/server.go:2294 +0x38
+net/http.(*ServeMux).ServeHTTP(0x1400007db78?, {0x1006a0a18, 0x140000aed20}, 0x140000f0a00)
+	/opt/homebrew/Cellar/go/1.24.3/libexec/src/net/http/server.go:2822 +0x1b4
+github.com/jackielii/structpages.(*stdRouter).ServeHTTP(0x1400007f680?, {0x1006a0a18?, 0x140000aed20?}, 0x1400007db60?)
+	/Users/jackieli/personal/structpages/router.go:42 +0x28
+net/http.serverHandler.ServeHTTP({0x140000f2f30?}, {0x1006a0a18?, 0x140000aed20?}, 0x6?)
+	/opt/homebrew/Cellar/go/1.24.3/libexec/src/net/http/server.go:3301 +0xbc
+net/http.(*conn).serve(0x140003cfcb0, {0x1006a1058, 0x1400023db00})
+	/opt/homebrew/Cellar/go/1.24.3/libexec/src/net/http/server.go:2102 +0x52c
+created by net/http.(*Server).Serve in goroutine 1
+	/opt/homebrew/Cellar/go/1.24.3/libexec/src/net/http/server.go:3454 +0x3d8
+2025/06/22 21:45:36 Error handling request /posts/building-with-go: context canceled
+2025/06/22 21:45:36 GET /posts/building-with-go 5.195392s
+2025/06/22 21:45:36 GET /admin/posts/1/edit 765.706084ms
+2025/06/22 21:45:40 GET / 719.542µs
+2025/06/22 21:45:43 GET /admin/ 1.844917ms
+2025/06/22 21:45:45 GET /admin/ 887.5µs
+2025/06/22 21:45:46 GET /admin/posts/ 813.25µs
+2025/06/22 21:45:46 GET /admin/users/ 654.459µs
+2025/06/22 21:45:47 Error handling request /admin/media: error calling component mediaLibrary.Page: error calling component method main.mediaLibraryPage.Page: method main.mediaLibraryPage.Page requires argument of type *main.User, but not found
+2025/06/22 21:45:47 GET /admin/media 423.209µs
+2025/06/22 21:45:48 GET /admin/settings 262.167µs
+2025/06/22 21:45:49 Error handling request /admin/media: error calling component mediaLibrary.Page: error calling component method main.mediaLibraryPage.Page: method main.mediaLibraryPage.Page requires argument of type *main.User, but not found
+2025/06/22 21:45:49 GET /admin/media 903.167µs
+Initializing media library page
+
+Available routes:
+/
+/posts/{slug}
+/category/{slug}
+/search
+/login
+/logout
+/admin
+/admin/posts
+/admin/posts/new
+/admin/posts/{id}/edit
+/admin/users
+/admin/settings
+/api/posts/{id}/publish
+/static/
+2025/06/22 21:46:28 Starting blog server on http://localhost:8080
+2025/06/22 21:46:31 GET /admin/media 10.25µs
+2025/06/22 21:46:31 GET /login 199.584µs
+2025/06/22 21:46:32 GET /admin/media 20.542µs
+2025/06/22 21:46:32 POST /login 280.084µs
+2025/06/22 21:46:39 POST /login 67.468875ms
+2025/06/22 21:46:39 POST /admin/ 971.791µs
+2025/06/22 21:46:40 POST /login 102.363917ms
+2025/06/22 21:46:40 GET /admin/media 181.25µs
+2025/06/22 21:46:45 GET /admin/media 502.416µs
+2025/06/22 21:46:45 GET /admin/media 737.709µs
+2025/06/22 21:46:46 GET /admin/media 147.916µs
+2025/06/22 21:46:46 GET /admin/media 420.792µs
+2025/06/22 21:46:47 GET /admin/media 416.375µs
+2025/06/22 21:46:47 GET /admin/media 789.75µs
+2025/06/22 21:46:47 GET /admin/media 621.333µs
+2025/06/22 21:46:48 GET /admin/users/ 1.318917ms
+2025/06/22 21:46:49 GET /admin/media 748.583µs
+2025/06/22 21:46:52 GET /admin/settings 2.262583ms
+2025/06/22 21:46:57 POST /admin/settings 722.041µs
+2025/06/22 21:47:03 GET /admin/media 414.125µs
+2025/06/22 21:47:04 GET /admin/settings 398.958µs
+2025/06/22 21:47:08 GET / 2.049083ms
+2025/06/22 21:47:13 GET /category/technology 1.782667ms
+2025/06/22 21:47:14 GET /category/design 2.162ms
+2025/06/22 21:47:15 GET /category/technology 1.321542ms
+2025/06/22 21:47:15 GET /category/design 1.234041ms
+2025/06/22 21:47:16 GET /search 721.75µs
+2025/06/22 21:47:17 GET /admin/ 2.888125ms
+2025/06/22 21:47:19 GET /admin/posts/ 2.035958ms
+2025/06/22 21:47:19 GET /admin/users/ 1.258417ms
+2025/06/22 21:47:20 GET /admin/media 883.041µs
+2025/06/22 21:47:21 GET /admin/settings 824.292µs
+2025/06/22 21:47:25 GET /admin/posts/ 1.473125ms
+2025/06/22 21:47:26 GET /admin/users/ 1.236708ms
+2025/06/22 21:47:26 GET /admin/posts/ 1.345583ms
+2025/06/22 21:47:27 GET /posts/welcome-to-structpages 7.79475ms
+2025/06/22 21:47:30 GET /posts/building-with-go 804.625µs
+2025/06/22 21:47:31 GET /posts/draft-post 3.202083ms
+2025/06/22 21:47:34 GET /admin/posts/1/edit 1.336375ms
+2025/06/22 21:47:43 POST /admin/posts/1/edit 2.682458ms
+2025/06/22 21:47:44 POST /admin/posts/1/edit 4.760834ms
+2025/06/22 21:47:44 POST /admin/posts/1/edit 3.891209ms
+2025/06/22 21:47:45 POST /admin/posts/1/edit 5.645292ms
+2025/06/22 21:47:45 POST /admin/posts/1/edit 2.463542ms
+2025/06/22 21:47:45 POST /admin/posts/1/edit 3.629667ms
+2025/06/22 21:47:45 POST /admin/posts/1/edit 2.966208ms
+2025/06/22 21:47:45 POST /admin/posts/1/edit 3.3865ms
+2025/06/22 21:47:46 POST /admin/posts/1/edit 3.46425ms
+2025/06/22 21:47:46 POST /admin/posts/1/edit 4.0235ms
+2025/06/22 21:47:46 POST /admin/posts/1/edit 4.957ms
+2025/06/22 21:47:46 POST /admin/posts/1/edit 4.382333ms
+2025/06/22 21:47:46 POST /admin/posts/1/edit 2.395458ms
+2025/06/22 21:47:47 POST /admin/posts/1/edit 4.653583ms
+2025/06/22 21:48:17 POST /api/posts/1/autosave 5.772333ms
+2025/06/22 21:48:48 POST /api/posts/1/autosave 6.071084ms
+2025/06/22 21:49:19 POST /api/posts/1/autosave 5.040708ms
+2025/06/22 21:49:50 POST /api/posts/1/autosave 4.827417ms
+2025/06/22 21:50:21 POST /api/posts/1/autosave 2.981ms
+2025/06/22 21:50:33 GET / 2.232625ms
+2025/06/22 21:50:34 GET /search 952µs
+2025/06/22 21:50:37 GET /search 1.358625ms
+2025/06/22 21:50:48 GET /search 1.688375ms
+Initializing media library page
+
+Available routes:
+/
+/posts/{slug}
+/category/{slug}
+/search
+/login
+/logout
+/admin
+/admin/posts
+/admin/posts/new
+/admin/posts/{id}/edit
+/admin/users
+/admin/settings
+/api/posts/{id}/publish
+/static/
+2025/06/22 21:58:54 Starting blog server on http://localhost:8080
