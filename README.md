@@ -221,17 +221,16 @@ For more complex scenarios, implement custom PageConfig that switches based on H
 ```go
 type todoPage struct{}
 
-func (t todoPage) Page() templ.Component {
-    // Full page render
-    return todoPageTemplate()
+templ (t todoPage) Page() {
+    // Full page
 }
 
-func (t todoPage) TodoList() templ.Component {
+templ (t todoPage) TodoList() {
     // Render just the todo list
     return todoListTemplate()
 }
 
-func (t todoPage) TodoItem() templ.Component {
+templ (t todoPage) TodoItem() {
     // Render a single todo item
     return todoItemTemplate()
 }
