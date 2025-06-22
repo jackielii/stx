@@ -529,8 +529,8 @@ sessionManager := NewSessionManager()
 
 // Services are passed as additional arguments to MountPages
 sp.MountPages(r, pages{}, "/", "My App", 
-    store,           // Will be available in page methods
-    sessionManager,  // Will be available in page methods
+    store,           // Will be available in page & other methods
+    sessionManager,  // Will be available in page & other methods
     logger,          // Any other dependencies
 )
 ```
