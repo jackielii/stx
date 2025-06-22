@@ -18,7 +18,6 @@ func join(page any, pattern string) string {
 }
 
 // Layout components
-
 templ layout(title string, user *User) {
 	<!DOCTYPE html>
 	<html lang="en">
@@ -64,7 +63,6 @@ templ adminLayout(title string, user *User) {
 }
 
 // Navigation components
-
 templ navbar(user *User) {
 	<nav class="navbar">
 		<div class="container">
@@ -125,7 +123,6 @@ templ footer() {
 }
 
 // UI Components
-
 templ card(title string) {
 	<div class="card">
 		if title != "" {
@@ -148,10 +145,10 @@ templ alert(variant string, message string) {
 templ formField(label, name, inputType string, value string, errors []string) {
 	<div class="form-field">
 		<label for={ name }>{ label }</label>
-		<input 
-			type={ inputType } 
-			id={ name } 
-			name={ name } 
+		<input
+			type={ inputType }
+			id={ name }
+			name={ name }
 			value={ value }
 			class={ templ.KV("error", len(errors) > 0) }
 		/>
@@ -164,9 +161,9 @@ templ formField(label, name, inputType string, value string, errors []string) {
 templ textareaField(label, name string, value string, rows int, errors []string) {
 	<div class="form-field">
 		<label for={ name }>{ label }</label>
-		<textarea 
-			id={ name } 
-			name={ name } 
+		<textarea
+			id={ name }
+			name={ name }
 			rows={ fmt.Sprint(rows) }
 			class={ templ.KV("error", len(errors) > 0) }
 		>{ value }</textarea>
@@ -179,8 +176,8 @@ templ textareaField(label, name string, value string, rows int, errors []string)
 templ selectField(label, name string, value string, options map[string]string, errors []string) {
 	<div class="form-field">
 		<label for={ name }>{ label }</label>
-		<select 
-			id={ name } 
+		<select
+			id={ name }
 			name={ name }
 			class={ templ.KV("error", len(errors) > 0) }
 		>
@@ -200,7 +197,6 @@ templ pagination(currentPage, totalPages int, baseURL templ.SafeURL) {
 			if currentPage > 1 {
 				<a href={ templ.SafeURL(fmt.Sprintf("%s?page=%d", baseURL, currentPage-1)) } class="prev">Previous</a>
 			}
-			
 			for i := 1; i <= totalPages; i++ {
 				if i == currentPage {
 					<span class="current">{ fmt.Sprint(i) }</span>
@@ -208,7 +204,6 @@ templ pagination(currentPage, totalPages int, baseURL templ.SafeURL) {
 					<a href={ templ.SafeURL(fmt.Sprintf("%s?page=%d", baseURL, i)) }>{ fmt.Sprint(i) }</a>
 				}
 			}
-			
 			if currentPage < totalPages {
 				<a href={ templ.SafeURL(fmt.Sprintf("%s?page=%d", baseURL, currentPage+1)) } class="next">Next</a>
 			}
@@ -249,7 +244,7 @@ templ confirmModal(id, title, message, action string) {
 			<p>{ message }</p>
 			<div class="modal-actions">
 				<button @click="open = false">Cancel</button>
-				<button 
+				<button
 					class="danger"
 					hx-post={ action }
 					hx-confirm={ message }

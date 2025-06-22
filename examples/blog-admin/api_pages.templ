@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strconv"
 	"time"
-	
+
 	"github.com/go-playground/form/v4"
 )
 
@@ -17,27 +17,27 @@ type apiPostPublishPage struct{}
 
 func (p apiPostPublishPage) ServeHTTP(w http.ResponseWriter, r *http.Request, store *Store, auth *AuthService) error {
 	postID, _ := strconv.Atoi(r.PathValue("id"))
-	
+
 	post, err := store.GetPostByID(postID)
 	if err != nil {
 		return err
 	}
-	
+
 	// Check permission
 	user := auth.GetUser(r)
 	if user.Role != "admin" && post.AuthorID != user.ID {
 		return fmt.Errorf("forbidden")
 	}
-	
+
 	// Update status
 	post.Status = "published"
 	now := time.Now()
 	post.PublishedAt = &now
-	
+
 	if err := store.UpdatePost(post); err != nil {
 		return err
 	}
-	
+
 	// Return updated row for HTMX
 	w.Header().Set("Content-Type", "text/html")
 	return render(w, r, postTableRow(post))
@@ -48,26 +48,26 @@ type apiPostUnpublishPage struct{}
 
 func (u apiPostUnpublishPage) ServeHTTP(w http.ResponseWriter, r *http.Request, store *Store, auth *AuthService) error {
 	postID, _ := strconv.Atoi(r.PathValue("id"))
-	
+
 	post, err := store.GetPostByID(postID)
 	if err != nil {
 		return err
 	}
-	
+
 	// Check permission
 	user := auth.GetUser(r)
 	if user.Role != "admin" && post.AuthorID != user.ID {
 		return fmt.Errorf("forbidden")
 	}
-	
+
 	// Update status
 	post.Status = "draft"
 	post.PublishedAt = nil
-	
+
 	if err := store.UpdatePost(post); err != nil {
 		return err
 	}
-	
+
 	// Return updated row for HTMX
 	w.Header().Set("Content-Type", "text/html")
 	return render(w, r, postTableRow(post))
@@ -78,18 +78,18 @@ type apiPostAutosavePage struct{}
 
 func (a apiPostAutosavePage) ServeHTTP(w http.ResponseWriter, r *http.Request, store *Store, auth *AuthService, decoder *form.Decoder) error {
 	postID, _ := strconv.Atoi(r.PathValue("id"))
-	
+
 	post, err := store.GetPostByID(postID)
 	if err != nil {
 		return err
 	}
-	
+
 	// Check permission
 	user := auth.GetUser(r)
 	if user.Role != "admin" && post.AuthorID != user.ID {
 		return fmt.Errorf("forbidden")
 	}
-	
+
 	// Parse form data
 	var f postForm
 	if err := r.ParseForm(); err != nil {
@@ -98,20 +98,20 @@ func (a apiPostAutosavePage) ServeHTTP(w http.ResponseWriter, r *http.Request, s
 	if err := decoder.Decode(&f, r.PostForm); err != nil {
 		return err
 	}
-	
+
 	// Update only content fields (not status)
 	post.Title = f.Title
 	post.Content = f.Content
 	post.Excerpt = f.Excerpt
-	
+
 	if err := store.UpdatePost(post); err != nil {
 		return err
 	}
-	
+
 	// Return JSON response
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]interface{}{
-		"success": true,
+		"success":  true,
 		"saved_at": time.Now().Format("3:04 PM"),
 	})
 	return nil
@@ -123,7 +123,7 @@ type apiMediaUploadPage struct{}
 func (m apiMediaUploadPage) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// This demonstrates the standard http.Handler interface (no error return)
 	// In a real app, you'd handle file uploads here
-	
+
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<div class="media-item">
 		<img src="/static/placeholder.jpg" alt="Uploaded image">
@@ -156,7 +156,7 @@ templ postTableRow(post *Post) {
 		<td class="actions">
 			<a href={ urlFor(ctx, adminPostEditPage{}, post.ID) }>Edit</a>
 			if post.Status == "draft" {
-				<button 
+				<button
 					hx-post={ urlFor(ctx, apiPostPublishPage{}, post.ID) }
 					hx-swap="outerHTML"
 					hx-target="closest tr"
@@ -164,7 +164,7 @@ templ postTableRow(post *Post) {
 					Publish
 				</button>
 			} else {
-				<button 
+				<button
 					hx-post={ urlFor(ctx, apiPostUnpublishPage{}, post.ID) }
 					hx-swap="outerHTML"
 					hx-target="closest tr"
@@ -172,7 +172,7 @@ templ postTableRow(post *Post) {
 					Unpublish
 				</button>
 			}
-			<button 
+			<button
 				class="danger"
 				hx-post={ urlFor(ctx, adminPostDeletePage{}, post.ID) }
 				hx-confirm="Are you sure you want to delete this post?"
@@ -189,7 +189,7 @@ templ postTableRow(post *Post) {
 func (s searchPage) PageConfig(r *http.Request) (string, error) {
 	// Custom PageConfig for different HTMX targets
 	hxTarget := r.Header.Get("HX-Target")
-	
+
 	switch hxTarget {
 	case "search-results":
 		// Return just the results component
@@ -209,4 +209,3 @@ func (m mediaLibraryPage) Init() {
 	// Could be used to set up file storage, etc.
 	fmt.Println("Initializing media library page")
 }
-

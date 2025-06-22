@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	
+
 	"github.com/go-playground/form/v4"
 )
 
@@ -12,35 +12,35 @@ import (
 type adminUserListPage struct{}
 
 type adminUserListProps struct {
-	User       *User
-	Users      []*User
-	Total      int
-	Page       int
+	User  *User
+	Users []*User
+	Total int
+	Page  int
 }
 
 func (u adminUserListPage) Props(r *http.Request, store *Store, auth *AuthService) (adminUserListProps, error) {
 	user := auth.GetUser(r)
-	
+
 	// Only admins can view users
 	if user.Role != "admin" {
 		return adminUserListProps{}, fmt.Errorf("forbidden")
 	}
-	
+
 	page := 1
 	if p := r.URL.Query().Get("page"); p != "" {
 		if parsed, err := strconv.Atoi(p); err == nil && parsed > 0 {
 			page = parsed
 		}
 	}
-	
+
 	limit := 20
 	offset := (page - 1) * limit
-	
+
 	users, total, err := store.ListUsers(limit, offset)
 	if err != nil {
 		return adminUserListProps{}, err
 	}
-	
+
 	return adminUserListProps{
 		User:  user,
 		Users: users,
@@ -55,7 +55,6 @@ templ (u adminUserListPage) Page(props adminUserListProps) {
 			<h1>Users</h1>
 			<a href={ urlFor(ctx, adminUserNewPage{}) } class="btn primary">New User</a>
 		</div>
-		
 		@dataTable([]string{"Username", "Email", "Role", "Created", "Actions"}) {
 			for _, user := range props.Users {
 				<tr>
@@ -70,7 +69,7 @@ templ (u adminUserListPage) Page(props adminUserListProps) {
 					<td class="actions">
 						<a href={ urlFor(ctx, adminUserEditPage{}, user.ID) }>Edit</a>
 						if user.ID != props.User.ID {
-							<button 
+							<button
 								class="danger"
 								hx-post={ urlFor(ctx, adminUserDeletePage{}, user.ID) }
 								hx-confirm="Are you sure you want to delete this user?"
@@ -84,7 +83,6 @@ templ (u adminUserListPage) Page(props adminUserListProps) {
 				</tr>
 			}
 		}
-		
 		if baseURL, err := urlFor(ctx, adminUserListPage{}); err == nil {
 			@pagination(props.Page, (props.Total+19)/20, baseURL)
 		}
@@ -107,7 +105,7 @@ func (u adminUserNewPage) ServeHTTP(w http.ResponseWriter, r *http.Request, stor
 	if currentUser.Role != "admin" {
 		return fmt.Errorf("forbidden")
 	}
-	
+
 	if r.Method == "POST" {
 		var f userForm
 		if err := r.ParseForm(); err != nil {
@@ -116,13 +114,13 @@ func (u adminUserNewPage) ServeHTTP(w http.ResponseWriter, r *http.Request, stor
 		if err := decoder.Decode(&f, r.PostForm); err != nil {
 			return err
 		}
-		
+
 		// Hash password
 		hash, err := HashPassword(f.Password)
 		if err != nil {
 			return err
 		}
-		
+
 		// Create user
 		user := &User{
 			Username:     f.Username,
@@ -130,16 +128,16 @@ func (u adminUserNewPage) ServeHTTP(w http.ResponseWriter, r *http.Request, stor
 			PasswordHash: hash,
 			Role:         f.Role,
 		}
-		
+
 		if err := store.CreateUser(user); err != nil {
 			return err
 		}
-		
+
 		// Redirect to users list
 		http.Redirect(w, r, "/admin/users", http.StatusSeeOther)
 		return nil
 	}
-	
+
 	// GET - show form
 	return render(w, r, userFormPage(currentUser, nil, &userForm{Role: "reader"}, ""))
 }
@@ -149,14 +147,14 @@ func (u adminUserEditPage) ServeHTTP(w http.ResponseWriter, r *http.Request, sto
 	if currentUser.Role != "admin" {
 		return fmt.Errorf("forbidden")
 	}
-	
+
 	userID, _ := strconv.Atoi(r.PathValue("id"))
-	
+
 	user, err := store.GetUserByID(userID)
 	if err != nil {
 		return err
 	}
-	
+
 	if r.Method == "POST" {
 		var f userForm
 		if err := r.ParseForm(); err != nil {
@@ -165,12 +163,12 @@ func (u adminUserEditPage) ServeHTTP(w http.ResponseWriter, r *http.Request, sto
 		if err := decoder.Decode(&f, r.PostForm); err != nil {
 			return err
 		}
-		
+
 		// Update user
 		user.Username = f.Username
 		user.Email = f.Email
 		user.Role = f.Role
-		
+
 		// Update password if provided
 		if f.Password != "" {
 			hash, err := HashPassword(f.Password)
@@ -179,19 +177,19 @@ func (u adminUserEditPage) ServeHTTP(w http.ResponseWriter, r *http.Request, sto
 			}
 			user.PasswordHash = hash
 		}
-		
+
 		// In a real app, you'd have an UpdateUser method
 		// For now, show success
 		return render(w, r, userFormPage(currentUser, user, &f, "User updated successfully"))
 	}
-	
+
 	// GET - show form
 	form := &userForm{
 		Username: user.Username,
 		Email:    user.Email,
 		Role:     user.Role,
 	}
-	
+
 	return render(w, r, userFormPage(currentUser, user, form, ""))
 }
 
@@ -204,13 +202,11 @@ templ userFormPage(currentUser *User, user *User, form *userForm, message string
 				<h1>Edit User</h1>
 			}
 		</div>
-		
 		if message != "" {
 			@alert("success", message)
 		}
-		
-		<form 
-			method="POST" 
+		<form
+			method="POST"
 			action={ ternaryURLWithError(user == nil, ctx, adminUserNewPage{}, adminUserEditPage{}, user.ID) }
 			class="user-form"
 		>
@@ -219,10 +215,9 @@ templ userFormPage(currentUser *User, user *User, form *userForm, message string
 			@formField(ternary(user == nil, "Password", "Password (leave blank to keep current)"), "password", "password", "", nil)
 			@selectField("Role", "role", form.Role, map[string]string{
 				"reader": "Reader",
-				"author": "Author", 
-				"admin": "Admin",
+				"author": "Author",
+				"admin":  "Admin",
 			}, nil)
-			
 			<button type="submit" class="btn primary">
 				if user == nil {
 					Create User
@@ -242,14 +237,14 @@ func (u adminUserDeletePage) ServeHTTP(w http.ResponseWriter, r *http.Request, s
 	if currentUser.Role != "admin" {
 		return fmt.Errorf("forbidden")
 	}
-	
+
 	userID, _ := strconv.Atoi(r.PathValue("id"))
-	
+
 	// Can't delete yourself
 	if userID == currentUser.ID {
 		return fmt.Errorf("cannot delete yourself")
 	}
-	
+
 	// In a real app, you'd have a DeleteUser method
 	// For now, return success
 	w.WriteHeader(http.StatusOK)
@@ -270,7 +265,7 @@ func (s adminSettingsPage) ServeHTTP(w http.ResponseWriter, r *http.Request, aut
 	if user.Role != "admin" {
 		return fmt.Errorf("forbidden")
 	}
-	
+
 	if r.Method == "POST" {
 		var f settingsForm
 		if err := r.ParseForm(); err != nil {
@@ -279,16 +274,16 @@ func (s adminSettingsPage) ServeHTTP(w http.ResponseWriter, r *http.Request, aut
 		if err := decoder.Decode(&f, r.PostForm); err != nil {
 			return err
 		}
-		
+
 		// Update config (in memory only for this example)
 		config.SiteName = f.SiteName
 		config.SiteDescription = f.SiteDescription
 		config.AdminEmail = f.AdminEmail
-		
+
 		// Show success
 		return render(w, r, s.Page(user, config, "Settings updated successfully"))
 	}
-	
+
 	// GET - show form
 	return render(w, r, s.Page(user, config, ""))
 }
@@ -296,16 +291,13 @@ func (s adminSettingsPage) ServeHTTP(w http.ResponseWriter, r *http.Request, aut
 templ (s adminSettingsPage) Page(user *User, config *Config, message string) {
 	@adminLayout("Settings", user) {
 		<h1>Settings</h1>
-		
 		if message != "" {
 			@alert("success", message)
 		}
-		
 		<form method="POST" action={ urlFor(ctx, adminSettingsPage{}) } class="settings-form">
 			@formField("Site Name", "site_name", "text", config.SiteName, nil)
 			@formField("Site Description", "site_description", "text", config.SiteDescription, nil)
 			@formField("Admin Email", "admin_email", "email", config.AdminEmail, nil)
-			
 			<button type="submit" class="btn primary">Save Settings</button>
 		</form>
 	}
@@ -322,16 +314,16 @@ templ (m mediaLibraryPage) Page(user *User) {
 	@adminLayout("Media Library", user) {
 		<div class="page-header">
 			<h1>Media Library</h1>
-			<button 
+			<button
 				class="btn primary"
 				@click="$refs.fileInput.click()"
 			>
 				Upload Files
 			</button>
-			<input 
-				type="file" 
-				x-ref="fileInput" 
-				multiple 
+			<input
+				type="file"
+				x-ref="fileInput"
+				multiple
 				accept="image/*"
 				style="display: none"
 				hx-post={ urlFor(ctx, apiMediaUploadPage{}) }
@@ -340,11 +332,8 @@ templ (m mediaLibraryPage) Page(user *User) {
 				hx-swap="afterbegin"
 			/>
 		</div>
-		
 		<div id="media-grid" class="media-grid">
 			<p>Media library functionality would go here</p>
 		</div>
 	}
 }
-
-

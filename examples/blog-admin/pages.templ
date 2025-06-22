@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	
+
 	"github.com/go-playground/form/v4"
 )
 
@@ -12,10 +12,10 @@ import (
 type homePage struct{}
 
 type homePageProps struct {
-	RecentPosts    []*Post
-	PopularPosts   []*Post
-	Categories     []*Category
-	User           *User
+	RecentPosts  []*Post
+	PopularPosts []*Post
+	Categories   []*Category
+	User         *User
 }
 
 func (h homePage) Props(r *http.Request, store *Store, auth *AuthService) (homePageProps, error) {
@@ -60,7 +60,6 @@ templ (h homePage) Page(props homePageProps) {
 				<h1>Welcome to Structpages Blog</h1>
 				<p>A powerful blog platform demonstrating advanced structpages features</p>
 			</section>
-
 			<div class="home-grid">
 				<section class="recent-posts">
 					<h2>Recent Posts</h2>
@@ -68,7 +67,6 @@ templ (h homePage) Page(props homePageProps) {
 						@postCard(post)
 					}
 				</section>
-
 				<aside class="sidebar">
 					<section class="popular-posts">
 						<h3>Popular Posts</h3>
@@ -83,7 +81,6 @@ templ (h homePage) Page(props homePageProps) {
 							}
 						</ul>
 					</section>
-
 					<section class="categories">
 						<h3>Categories</h3>
 						<ul>
@@ -129,7 +126,7 @@ type postPageProps struct {
 
 func (p postPage) Props(r *http.Request, store *Store, auth *AuthService) (postPageProps, error) {
 	slug := r.PathValue("slug")
-	
+
 	post, err := store.GetPostBySlug(slug)
 	if err != nil {
 		return postPageProps{}, err
@@ -181,11 +178,9 @@ templ (p postPage) Page(props postPageProps) {
 					@alert("warning", "This post is a draft and not yet published")
 				}
 			</header>
-
 			<div class="post-content">
 				@templ.Raw(props.Post.Content)
 			</div>
-
 			<footer class="post-footer">
 				if len(props.Post.Categories) > 0 {
 					<div class="categories">
@@ -198,7 +193,6 @@ templ (p postPage) Page(props postPageProps) {
 						}
 					</div>
 				}
-				
 				if len(props.Post.Tags) > 0 {
 					<div class="tags">
 						<strong>Tags:</strong>
@@ -211,7 +205,6 @@ templ (p postPage) Page(props postPageProps) {
 					</div>
 				}
 			</footer>
-
 			if len(props.RelatedPosts) > 0 {
 				<section class="related-posts">
 					<h3>Related Posts</h3>
@@ -239,7 +232,7 @@ type categoryPageProps struct {
 
 func (c categoryPage) Props(r *http.Request, store *Store, auth *AuthService) (categoryPageProps, error) {
 	slug := r.PathValue("slug")
-	
+
 	category, err := store.GetCategoryBySlug(slug)
 	if err != nil {
 		return categoryPageProps{}, err
@@ -285,13 +278,11 @@ templ (c categoryPage) Page(props categoryPageProps) {
 				}
 				<span class="post-count">{ fmt.Sprintf("%d posts", props.Total) }</span>
 			</header>
-
 			<div class="posts-list">
 				for _, post := range props.Posts {
 					@postCard(post)
 				}
 			</div>
-
 			if url, err := urlFor(ctx, categoryPage{}, props.Category.Slug); err == nil {
 				@pagination(props.Page, (props.Total+9)/10, url)
 			}
@@ -312,7 +303,7 @@ type searchPageProps struct {
 
 func (s searchPage) Props(r *http.Request, store *Store, auth *AuthService) (searchPageProps, error) {
 	query := r.URL.Query().Get("q")
-	
+
 	// Get page number from query
 	page := 1
 	if p := r.URL.Query().Get("page"); p != "" {
@@ -353,31 +344,27 @@ templ (s searchPage) Page(props searchPageProps) {
 	@layout("Search", props.User) {
 		<div class="container">
 			<h1>Search</h1>
-			
 			<form method="GET" action={ urlForOrEmpty(ctx, searchPage{}) } class="search-form">
-				<input 
-					type="search" 
-					name="q" 
+				<input
+					type="search"
+					name="q"
 					value={ props.Query }
 					placeholder="Search posts..."
 					autofocus
 				/>
 				<button type="submit">Search</button>
 			</form>
-
 			if props.Query != "" {
 				<div class="search-results">
 					<h2>
 						{ fmt.Sprintf("Found %d results for \"%s\"", props.Total, props.Query) }
 					</h2>
-					
 					if len(props.Results) > 0 {
 						<div class="posts-list">
 							for _, post := range props.Results {
 								@postCard(post)
 							}
 						</div>
-						
 						if baseURL, err := urlFor(ctx, searchPage{}); err == nil {
 							@pagination(props.Page, (props.Total+9)/10, templ.SafeURL(fmt.Sprintf("%s?q=%s", baseURL, props.Query)))
 						}
@@ -396,14 +383,12 @@ templ (s searchPage) Results(props searchPageProps) {
 		<h2>
 			{ fmt.Sprintf("Found %d results for \"%s\"", props.Total, props.Query) }
 		</h2>
-		
 		if len(props.Results) > 0 {
 			<div class="posts-list">
 				for _, post := range props.Results {
 					@postCard(post)
 				}
 			</div>
-			
 			if baseURL, err := urlFor(ctx, searchPage{}); err == nil {
 				@pagination(props.Page, (props.Total+9)/10, templ.SafeURL(fmt.Sprintf("%s?q=%s", baseURL, props.Query)))
 			}
@@ -463,22 +448,17 @@ templ (l loginPage) Page(user *User, form *loginForm, errorMsg string) {
 		<div class="container">
 			<div class="login-form">
 				<h1>Login</h1>
-				
 				if errorMsg != "" {
 					@alert("error", errorMsg)
 				}
-				
 				<form method="POST" action={ urlForOrEmpty(ctx, loginPage{}) }>
 					if form.Redirect != "" {
 						<input type="hidden" name="redirect" value={ form.Redirect }/>
 					}
-					
 					@formField("Username", "username", "text", form.Username, nil)
 					@formField("Password", "password", "password", "", nil)
-					
 					<button type="submit" class="btn primary">Login</button>
 				</form>
-				
 				<p class="hint">Demo credentials: admin / admin123</p>
 			</div>
 		</div>
@@ -493,4 +473,3 @@ func (l logoutPage) ServeHTTP(w http.ResponseWriter, r *http.Request, auth *Auth
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 	return nil
 }
-
